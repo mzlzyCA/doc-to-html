@@ -1,36 +1,56 @@
 ---
 name: doc-to-html
-displayName: Doc To HTML
-description: >
-  Convert Word documents (.doc/.docx) to clean, semantic HTML using the MinerU document processing engine. This skill transforms Microsoft Word files into well-structured HTML with proper tags, preserving headings, paragraphs, tables, lists, images, links, and text styling for web publishing.
-
-  Synonyms and variations: Word to HTML converter, docx to HTML, Word document to web page, convert .doc to HTML, Microsoft Word HTML export, Word file to HTML transformation, docx HTML renderer, document to web conversion, Word to webpage converter, Word HTML output, Word转HTML, 文档转网页, Word文件转HTML, docx转网页格式, 文档网页化, Word在线发布转换, 文档转HTML工具.
-
-  Trigger phrases: "How do I convert a Word document to HTML?", "I want to turn my .docx file into a web page", "I need to transform Word files to HTML format", "How can I export Word as HTML for my website?", "I want to convert my Word document for web publishing", "Convert my Word report to HTML".
-
-  Problems solved: publishing Word content on websites, creating web pages from Word drafts, email template creation from Word, CMS content import from Word documents, web-ready document conversion, converting Word newsletters to HTML email, migrating Word content to web platforms.
-tags:
-  - word-to-html
-  - docx-to-html
-  - document-conversion
-  - html-converter
-  - word-document
-  - web-publishing
-  - mineru
-  - format-conversion
-  - microsoft-word
-  - html-export
-  - webpage-conversion
-  - document-processing
+description: "Doc to HTML - convert Word (.doc/.docx) documents to HTML using MinerU. Use when you need HTML output from a Word file."
+homepage: https://mineru.net
+metadata: {"openclaw": {"emoji": "📄", "requires": {"bins": ["mineru-open-api"], "env": ["MINERU_TOKEN"]}, "primaryEnv": "MINERU_TOKEN", "install": [{"id": "npm", "kind": "node", "package": "mineru-open-api", "bins": ["mineru-open-api"], "label": "Install via npm"}, {"id": "go", "kind": "go", "package": "github.com/opendatalab/MinerU-Ecosystem/cli/mineru-open-api", "bins": ["mineru-open-api"], "label": "Install via go install", "os": ["darwin", "linux"]}]}}
 ---
 
-You are a document conversion assistant. When the user provides a Word document (.doc or .docx), use the `mineru` tool to convert it to clean HTML format.
+# Doc To HTML
 
-## Instructions
+Convert Word (.doc/.docx) documents to HTML using MinerU.
 
-1. Accept the user's Word file path or uploaded document.
-2. Call the `mineru` tool to process the document and convert it to HTML.
-3. If the conversion succeeds, present the HTML output clearly, or save it to a file.
-4. If an error occurs, report the error message and suggest possible fixes (e.g., check file path, ensure valid Word format).
-5. Preserve document structure: headings as h1-h6 tags, lists as ul/ol, tables as HTML tables, and text formatting as appropriate CSS or semantic tags.
-6. Offer to save the HTML output to a file if the user wants.
+## Install
+
+```bash
+npm install -g mineru-open-api
+# or via Go (macOS/Linux):
+go install github.com/opendatalab/MinerU-Ecosystem/cli/mineru-open-api@latest
+```
+
+## Quick Start
+
+```bash
+# Convert .docx to HTML (requires token)
+mineru-open-api extract report.docx -f html -o ./out/
+
+# Convert .doc to HTML (requires token)
+mineru-open-api extract report.doc -f html -o ./out/
+
+# With language hint
+mineru-open-api extract report.docx -f html --language en -o ./out/
+```
+
+## Authentication
+
+Token required:
+
+```bash
+mineru-open-api auth             # Interactive token setup
+export MINERU_TOKEN="your-token" # Or via environment variable
+```
+
+Create token at: https://mineru.net/apiManage/token
+
+## Capabilities
+
+- Supported input: .doc, .docx (local file or URL)
+- Output format: HTML (`-f html`)
+- HTML output requires `extract` with token — not available in `flash-extract`
+- Language hint with `--language` (default: `ch`, use `en` for English)
+
+## Notes
+
+- HTML output (`-f html`) is only available via `extract` with token
+- Output goes to stdout by default; use `-o <dir>` to save to a file
+- All progress/status messages go to stderr; document content goes to stdout
+- MinerU is open-source by OpenDataLab (Shanghai AI Lab): https://github.com/opendatalab/MinerU
